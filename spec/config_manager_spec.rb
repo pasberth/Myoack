@@ -16,6 +16,19 @@ describe Myoack::ConfigManager do
     its(:access_token_secret) { should == "YOUR_ACCESS_TOKEN_SECRET" }
   end
 
+  describe "#require_config(:tumblr)" do
+    let(:cfg) { cm << Myoack::TumblrConfig; cm.require_config(:tumblr) }
+    subject { cfg }
+    its(:site) { should == "http://api.tumblr.com/v2" }
+    its(:request_token_url) { should == "http://www.tumblr.com/oauth/request_token" }
+    its(:authorize_url) { should == "http://www.tumblr.com/oauth/authorize" }
+    its(:access_token_url) { should == "http://www.tumblr.com/oauth/access_token" }
+    its(:consumer_key) { should == "YOUR_CONSUMER_KEY" }
+    its(:consumer_secret) { should == "YOUR_CONSUMER_SECRET" }
+    its(:access_token) { should == "YOUR_ACCESS_TOKEN" }
+    its(:access_token_secret) { should == "YOUR_ACCESS_TOKEN_SECRET" }
+  end
+
   describe "#require_config(:somesite_example)" do
     let(:cfg) { cm << Myoack::OAuthConfig; cm.require_config(:somesite_example) }
     subject { cfg }

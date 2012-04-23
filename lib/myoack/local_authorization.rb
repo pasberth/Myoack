@@ -12,7 +12,12 @@ class LocalAuthorization < Sinatra::Base
     cfg = Config.require_config(params[:id])
     consumer_key = cfg.consumer_key
     consumer_secret = cfg.consumer_secret
-    consumer = OAuth::Consumer.new(consumer_key, consumer_secret, :site => cfg.site)
+    consumer = OAuth::Consumer.new( consumer_key,
+                                    consumer_secret,
+                                    :site => cfg.site,
+                                    :request_token_url => cfg.request_token_url,
+                                    :authorize_url => cfg.authorize_url,
+                                    :access_token_url => cfg.access_token_url )
     req = consumer.get_request_token :oauth_callback => "http://#{HOST}:#{PORT}/oauth/callback"
     session['config_id'] = params[:id]
     session['request_token'] = req.token
@@ -24,7 +29,12 @@ class LocalAuthorization < Sinatra::Base
     cfg = Config.require_config(session['config_id'])
     consumer_key = cfg.consumer_key
     consumer_secret = cfg.consumer_secret
-    consumer = OAuth::Consumer.new(consumer_key, consumer_secret, :site => cfg.site)
+    consumer = OAuth::Consumer.new( consumer_key,
+                                    consumer_secret,
+                                    :site => cfg.site,
+                                    :request_token_url => cfg.request_token_url,
+                                    :authorize_url => cfg.authorize_url,
+                                    :access_token_url => cfg.access_token_url )
     req = OAuth::RequestToken.new consumer, session['request_token'], session['request_token_secret']
     acs = req.get_access_token :oauth_token => params[:oauth_token], :oauth_verifier => params[:oauth_verifier]
     cfg.access_token = acs.token

@@ -58,16 +58,25 @@ class OAuthConfig < KeyConfig
   # *Example*: "http://api.twitter.com/oauth/request_token"
   # *Default*: "#@site/oauth/request_token"
   attr_accessor :request_token_url
+  def request_token_url
+    @request_token_url ||= "#@site/oauth/request_token"
+  end
 
   # *Optional*
   # *Example*: "http://api.twitter.com/oauth/authorize"
   # *Default*: "#@site/oauth/authorize"
   attr_accessor :authorize_url
+  def authorize_url
+    @authorize_url ||= "#@site/oauth/authorize"
+  end
 
   # *Optional*
   # *Example*: "http://api.twitter.com/oauth/access_token"
   # *Default*: "#@site/oauth/access_token"
   attr_accessor :access_token_url
+  def access_token_url
+    @access_token_url ||= "#@site/oauth/access_token"
+  end
   
   attr_accessor :consumer_key
   attr_accessor :consumer_secret
