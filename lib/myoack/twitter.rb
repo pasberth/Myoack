@@ -6,4 +6,6 @@ class TwitterConfig < OAuthConfig
   auto_config :twitter
   default :site, "https://api.twitter.com"
 end
+
+Config << TwitterConfig
 end

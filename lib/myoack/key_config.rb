@@ -1,69 +1,12 @@
 require 'yaml'
-require 'net/http'
-require 'net/https'
-require 'uri'
+require 'myoack/config_manager'
 
 module Myoack
 
-MYOACK_HOME = File.join(ENV["HOME"], '.myoack')
-
-class Config
-
-  @@configs = {}
-  @@config_types = {}
-  @@config_classes = {}
-
+class KeyConfig
   attr_accessor :id
+  attr_accessor :type
 
-  def initialize options
-    self.class.config_defaults.merge(options).each { |k, v| send(:"#{k}=", v) }
-  end
-  
-  def self.configs
-    @@configs
-  end
-  
-  def self.config_types
-    @@config_types
-  end
-  
-  def self.config_classes
-    @@config_classes
-  end
-  
-  def self.load_config_file
-    YAML.load_file MYOACK_HOME + '/keys.yml'
-  end
-  
-  def self.dump_config_file cfg
-    open MYOACK_HOME + '/keys.yml', 'w' do |f|
-      f.write YAML.dump(cfg)
-    end
-  end
-  
-  def self.configure_all
-    cfg = Config.load_config_file
-    cfg.each do |id, sitecfg|
-      configure(id, sitecfg) if Config.config_classes.key? id or cfg["site"] && cfg["type"]
-    end
-    true
-  end
-  
-  def self.configure id, sitecfg=nil, cfgclass=nil
-    return nil unless id
-    sitecfg ||= Config.load_config_file[id.to_s] or return nil
-    cfgclass ||= Config.config_classes[id.to_s] || Config.config_types[sitecfg["type"]]
-    Config.add_config id, cfgclass.new(sitecfg.merge(:id => id))
-  end
-  
-  def self.add_config id, cfg
-    Config.configs[id.to_s] = cfg
-  end
-
-  def self.auto_config id
-    Config.config_classes[id.to_s] = self
-  end
-  
   def self.id *a
     if a.empty?
       @id
@@ -88,19 +31,23 @@ class Config
     config_defaults[key.to_s] = value
   end
   
-  def self.config_type type
-    Config.config_types[type.to_s] = self
+  class << self
+    alias auto_config id
+    alias config_type type
   end
   
-  def self.require_config id
-    Config.configs[id.to_s] or (configure id; Config.configs[id.to_s]) or raise "Myoack don't know '#{id}'."
+  def initialize config=Config
+    @config = config
+    self.class.config_defaults.each { |k, v| send(:"#{k}=", v) }
   end
+  
+  attr_accessor :config
 end
 
-class OAuthConfig < Config
+class OAuthConfig < KeyConfig
   
   config_type :OAuth
-  
+
   # *Required*
   # *Example*: "https://api.twitter.com"
   attr_accessor :site
@@ -131,7 +78,7 @@ class OAuthConfig < Config
   end
   
   def save
-    cfg = Config.load_config_file
+    cfg = config.load_keys_file
     cfg[id] = {
       'site' => site,
       'request_token_url' => request_token_url,
@@ -142,7 +89,7 @@ class OAuthConfig < Config
       'access_token' => access_token,
       'access_token_secret' => access_token_secret
     }
-    Config.dump_config_file cfg
+    config.dump_config_file cfg
   end
   
   def save!
@@ -150,7 +97,9 @@ class OAuthConfig < Config
   end
 end
 
-class OAuth2Config < Config
+Config << OAuthConfig
+
+class OAuth2Config < KeyConfig
   
   config_type :OAuth2
 
@@ -172,4 +121,6 @@ class OAuth2Config < Config
   attr_accessor :client_secret
   attr_accessor :access_token
 end
+
+Config << OAuth2Config
 end

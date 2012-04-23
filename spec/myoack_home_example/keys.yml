@@ -1,0 +1,12 @@
+twitter:
+  consumer_key: YOUR_CONSUMER_KEY
+  consumer_secret: YOUR_CONSUMER_SECRET
+  access_token: YOUR_ACCESS_TOKEN
+  access_token_secret: YOUR_ACCESS_TOKEN_SECRET
+somesite_example:
+  type: OAuth
+  site: https://www.example.com
+  consumer_key: SOMESITE_CONSUMER_KEY_EXAMPLE
+  consumer_secret: SOMESITE_CONSUMER_KEY_EXAMPLE
+  access_token: SOMESITE_ACCESS_TOKEN_EXAMPL
+  access_token_secret: SOMESITE_ACCESS_TOKEN_SECRET_EXAMPLE

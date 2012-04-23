@@ -5,6 +5,7 @@ require 'oauth'
 require 'json'
 require 'pp'
 
+
 cfg = Myoack::Config.require_config(:twitter)
 consumer = OAuth::Consumer.new(
                cfg.consumer_key,
