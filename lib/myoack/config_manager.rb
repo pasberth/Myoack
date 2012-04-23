@@ -19,8 +19,22 @@ class ConfigManager
     end
     if File.exist? argv[0]
       load argv[0]
+      return
+    end
+    
+    case cmd = argv.shift
+    when "authorize!" then authorize!(*argv)
+    when "authorize" then authorize(*argv)
+    else raise "Unknown command: #{cmd}"
     end
   end
+  
+  def authorize! id
+    cfg = require_config(id)
+    cfg.authorize!
+  end
+  
+  alias authorize authorize!
   
   def << cfgclass
     cfg = cfgclass.new(self)

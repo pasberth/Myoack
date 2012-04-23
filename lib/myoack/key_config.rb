@@ -38,6 +38,8 @@ class KeyConfig
   
   def initialize config=Config
     @config = config
+    self.id = self.class.id
+    self.type = self.class.type
     self.class.config_defaults.each { |k, v| send(:"#{k}=", v) }
   end
   
