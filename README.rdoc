@@ -11,8 +11,7 @@ Defaults on the authorization to scribbled script by My OAuth Consumer Key
 === Only a authorize on the web service at first.
 
 Get a your consumer key from OAuth authorization wbe service.
-
-  for example, take it from https://dev.twitter.com/apps when you like the twitter.
+for example, take it from https://dev.twitter.com/apps when you like the twitter.
 
 Set the consumer key into "$HOME/.myoack/keys.yml".
 
