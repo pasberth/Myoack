@@ -14,9 +14,7 @@ class ConfigManager
   end
   
   def main *argv
-    if File.exist? @init_file_path
-      load @init_file_path
-    end
+    init_as_cli
     if File.exist? argv[0]
       load argv[0]
       return
@@ -26,6 +24,13 @@ class ConfigManager
     when "authorize!" then authorize!(*argv)
     when "authorize" then authorize(*argv)
     else raise "Unknown command: #{cmd}"
+    end
+  end
+  
+  def init_as_cli
+    configure_all
+    if File.exist? @init_file_path
+      load @init_file_path
     end
   end
   
