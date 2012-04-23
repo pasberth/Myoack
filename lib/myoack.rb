@@ -1,0 +1,1 @@
+require 'myoack/as_cli'
