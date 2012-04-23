@@ -23,6 +23,6 @@ Run command "myoack-local-authorization-server.rb". this command will use 13480 
 
 Run command "myoack.rb --auth <ID>"
 
-  $ myoack.rb authorize twitter
+  $ myoack.rb --auth twitter
 
 Let's scribble some short and simple script, and use consumer key and access token in the script.
