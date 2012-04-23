@@ -1,10 +1,7 @@
-$:.unshift File.dirname(__FILE__) + '/lib'
-require 'rubygems'
 require 'myoack'
 require 'oauth'
 require 'json'
 require 'pp'
-
 
 cfg = Myoack::Config.require_config(:twitter)
 consumer = OAuth::Consumer.new(
