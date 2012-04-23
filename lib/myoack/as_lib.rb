@@ -6,5 +6,4 @@ module Myoack
   require 'myoack/twitter'
   require 'myoack/github'
   require 'myoack/tumblr'
-  require 'myoack/local_authorization'
 end
