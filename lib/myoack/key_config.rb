@@ -11,7 +11,7 @@ class KeyConfig
     if a.empty?
       @id
     else
-      @id = a[0]
+      @id = a[0].to_s
     end
   end
   
@@ -19,7 +19,7 @@ class KeyConfig
     if a.empty?
       @type
     else
-      @type = a[0]
+      @type = a[0].to_s
     end
   end
 

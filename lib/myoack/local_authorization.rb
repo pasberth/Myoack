@@ -13,7 +13,7 @@ class LocalAuthorization < Sinatra::Base
     consumer_key = cfg.consumer_key
     consumer_secret = cfg.consumer_secret
     consumer = OAuth::Consumer.new(consumer_key, consumer_secret, :site => cfg.site)
-    req = consumer.get_request_token :oauth_callback => "http://#{HOST}:#{PORT}/oauth/callback?#id=#{id}"
+    req = consumer.get_request_token :oauth_callback => "http://#{HOST}:#{PORT}/oauth/callback"
     session['config_id'] = params[:id]
     session['request_token'] = req.token
     session['request_token_secret'] = req.secret
