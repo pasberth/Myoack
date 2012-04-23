@@ -10,18 +10,18 @@
 
 === Only a authorize on the web service at first.
 
-1. Get a your consumer key from OAuth authorization wbe service.
+Get a your consumer key from OAuth authorization wbe service.
 
   for example, take it from https://dev.twitter.com/apps when you like the twitter.
 
-2. Set the consumer key into "$HOME/.myoack/keys.yml".
+Set the consumer key into "$HOME/.myoack/keys.yml".
 
   twitter:
     consumer_key: YOUR_CONSUMER_KEY
-	consumer_secret: YOUR_CONSUMER_SECRET
+    consumer_secret: YOUR_CONSUMER_SECRET
 
-3. run command "myoack.rb authorize <ID>"
+run command "myoack.rb authorize <ID>"
 
   $ myoack.rb authorize twitter
 
-4. Let's scribble some short and simple script, and use consumer key and access token in the script.
+Let's scribble some short and simple script, and use consumer key and access token in the script.
