@@ -27,7 +27,6 @@ class ConfigManager
   end
   
   def init_as_cli
-    ::Version = Myoack::VERSION
     configure_all
     if File.exist? @init_file_path
       load @init_file_path
