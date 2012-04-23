@@ -1,0 +1,10 @@
+
+== About Twitter
+
+* https://dev.twitter.com/apps
+* You should set "http://www.example.com/dummy/oauth/callback" into the callback URL. (You can set any URL unless it is empty. But maybe "www.example.com" will be better.)
+
+== About Tumblr
+
+* http://www.tumblr.com/oauth/apps
+* You MUST set "http://localhost:13480/oauth/callback" into the default callback URL.
