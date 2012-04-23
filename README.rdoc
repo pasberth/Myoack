@@ -4,7 +4,7 @@
 
 == Description
 
-  Defaults on the authorization to scribbled script by My OAuth Consumer Key
+Defaults on the authorization to scribbled script by My OAuth Consumer Key
 
 == Usage
 
