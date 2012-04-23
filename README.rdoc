@@ -19,7 +19,9 @@ Set the consumer key into "$HOME/.myoack/keys.yml".
     consumer_key: YOUR_CONSUMER_KEY
     consumer_secret: YOUR_CONSUMER_SECRET
 
-run command "myoack.rb authorize <ID>"
+Run command "myoack-local-authorization-server.rb". this command will use 13480 port.
+
+Run command "myoack.rb authorize <ID>"
 
   $ myoack.rb authorize twitter
 
