@@ -1,9 +1,11 @@
-module Myoack
+require 'optparse'
 
+module Myoack
+  
 MYOACK_HOME = File.join(ENV["HOME"], '.myoack')
 
 class ConfigManager
-
+  
   def initialize home=MYOACK_HOME
     @home = home
     @init_file_path = File.join(@home, 'init.rb')
@@ -13,21 +15,19 @@ class ConfigManager
     @config_classes = {}
   end
   
-  def main *argv
-    init_as_cli
-    if File.exist? argv[0]
-      load argv[0]
-      return
-    end
-    
-    case cmd = argv.shift
-    when "authorize!" then authorize!(*argv)
-    when "authorize" then authorize(*argv)
-    else raise "Unknown command: #{cmd}"
+  def option_parser
+    OptionParser.new.tap do |opts|
+      opts.on('--authorize ID', 'Try authorize me on the <ID> which is in "$HOME/.myoack/keys.yml".') { |id| authorize(id)  }
     end
   end
   
+  def main *argv
+    init_as_cli
+    option_parser.parse! argv
+  end
+  
   def init_as_cli
+    ::Version = Myoack::VERSION
     configure_all
     if File.exist? @init_file_path
       load @init_file_path
