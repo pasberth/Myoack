@@ -29,6 +29,17 @@ describe Myoack::ConfigManager do
     its(:access_token_secret) { should == "YOUR_ACCESS_TOKEN_SECRET" }
   end
 
+  describe "#require_config(:tumblr)" do
+    let(:cfg) { cm << Myoack::GitHubConfig; cm.require_config(:github) }
+    subject { cfg }
+    its(:site) { should == "https://api.github.com" }
+    its(:authorize_url) { should == "https://github.com/login/oauth/authorize" }
+    its(:access_token_url) { should == "https://github.com/login/oauth/access_token" }
+    its(:client_id) { should == "YOUR_CLIENT_ID" }
+    its(:client_secret) { should == "YOUR_CLIENT_SECRET" }
+    its(:access_token) { should == "YOUR_ACCESS_TOKEN" }
+  end
+
   describe "#require_config(:somesite_example)" do
     let(:cfg) { cm << Myoack::OAuthConfig; cm.require_config(:somesite_example) }
     subject { cfg }

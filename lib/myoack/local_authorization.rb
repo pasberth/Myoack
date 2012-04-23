@@ -1,5 +1,6 @@
 require 'sinatra/base'
 require 'oauth'
+require 'oauth2'
 
 module Myoack
   
@@ -39,6 +40,30 @@ class LocalAuthorization < Sinatra::Base
     acs = req.get_access_token :oauth_token => params[:oauth_token], :oauth_verifier => params[:oauth_verifier]
     cfg.access_token = acs.token
     cfg.access_token_secret = acs.secret
+    cfg.save!
+    "Configured successful!"
+  end
+
+  get '/oauth2/authorize' do
+    cfg = Config.require_config(params[:id])
+    client = OAuth2::Client.new( cfg.client_id,
+                                 cfg.client_secret,
+                                :site => cfg.site,
+                                :authorize_url => cfg.authorize_url,
+                                :token_url => cfg.access_token_url )
+    session['config_id'] = params[:id]
+    redirect client.auth_code.authorize_url :redirect_uri => "http://#{HOST}:#{PORT}/oauth2/callback"
+  end
+  
+  get '/oauth2/callback' do
+    cfg = Config.require_config(session['config_id'])
+    client = OAuth2::Client.new( cfg.client_id,
+                                 cfg.client_secret,
+                                :site => cfg.site,
+                                :authorize_url => cfg.authorize_url,
+                                :token_url => cfg.access_token_url )
+    token = client.auth_code.get_token params[:code], :redirect_uri => "http://#{HOST}:#{PORT}/oauth2/callback"
+    cfg.access_token = token.token
     cfg.save!
     "Configured successful!"
   end

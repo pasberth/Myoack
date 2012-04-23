@@ -122,11 +122,39 @@ class OAuth2Config < KeyConfig
   # *Example*: "https://github.com/login/oauth/authorize"
   # *Default*: "#@site/oauth/authorize"
   attr_accessor :authorize_url
+  def authorize_url
+    @authorize_url ||= "#@site/oauth/authorize"
+  end
 
   # *Optional*
   # *Example*: "https://github.com/login/oauth/access_token"
   # *Default*: "#@site/oauth/access_token"
   attr_accessor :access_token_url
+  def access_token_url
+    @access_token_url ||= "#@site/oauth/access_token"
+  end
+
+  def authorize!
+    url = "http://%s:%s/oauth2/authorize?id=#{id}" % [LocalAuthorization::HOST, LocalAuthorization::PORT]
+    `open "#{url}"`
+  end
+
+  def save
+    cfg = config.load_keys_file
+    cfg[id] = {
+      'site' => site,
+      'authorize_url' => authorize_url,
+      'access_token_url' => access_token_url,
+      'client_id' => client_id,
+      'client_secret' => client_secret,
+      'access_token' => access_token
+    }
+    config.dump_config_file cfg
+  end
+  
+  def save!
+    save
+  end
 
   attr_accessor :client_id
   attr_accessor :client_secret
