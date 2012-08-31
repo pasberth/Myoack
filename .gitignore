@@ -1,3 +1,4 @@
 .bundler
 .bundle
 doc
+Gemfile.lock
