@@ -14,7 +14,8 @@ Gem::Specification.new do |s|
   s.test_files = `git ls-files -- spec/*`.split("\n")
   s.add_development_dependency "rake"
   s.add_development_dependency "rspec"
-  s.add_development_dependency "sinatra", "~> 1.3.0"
-  s.add_development_dependency "oauth"
-  s.add_development_dependency "yaml"
+  s.add_dependency "sinatra"
+  s.add_dependency "oauth"
+  s.add_dependency "oauth2"
+  s.add_dependency "multi_xml"
 end
