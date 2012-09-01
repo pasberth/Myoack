@@ -36,9 +36,9 @@ class KeyConfig
     alias config_type type
   end
   
-  def initialize config=Config
+  def initialize config=Config, id=self.class.id
     @config = config
-    self.id = self.class.id
+    self.id = id
     self.type = self.class.type
     self.class.config_defaults.each { |k, v| send(:"#{k}=", v) }
   end

@@ -76,7 +76,7 @@ class ConfigManager
     sitecfg ||= load_keys_file[id.to_s] or return nil
     cfg ||= configs[id.to_s] ||
             ( cfgclass = config_types[sitecfg["type"]];
-              cfgclass and cfgclass.new(self)) or return nil
+              cfgclass and cfgclass.new(self, id.to_s)) or return nil
     sitecfg.each { |k,v| cfg.send(:"#{k}=", v) }
     add_config id, cfg
     cfg
